@@ -8,8 +8,15 @@ export const Router = createContext();
 
 export const RouterProvider = ({ children }) => {
 
-    const [route, setRoute] = useState('#home');
-    const [params, setParams] = useState([]);
+    const [route, setRoute] = useState(() => {
+        const hash = window.location.hash || '#home';
+        return hash.split('/').shift()
+    });
+    const [params, setParams] = useState(() => {
+        const hash = window.location.hash.split('/');
+        hash.shift();
+        return hash;
+    });
 
     useEffect(() => {
         const handleHashChange = () => {
