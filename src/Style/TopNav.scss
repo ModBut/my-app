@@ -1,19 +1,76 @@
-nav.navbar {
+nav {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    height: 110px;
     box-sizing: border-box;
-   
-    .navbar-brand {
-      text-decoration: none;
-    }
-   
-    .navbar-nav {
+    gap: 5px;
+    
+    .menu {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      padding: 0 20px 5px;
       align-items: center;
+      width: 100%;
+      padding-top: 10px;
+      justify-content: space-between;
+      a {
+        color: $textColor;
+        font-size: $h3FontSize;
+        text-decoration: none;
+        transition: all 0.2s;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .login {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid $mint;
+        justify-content: space-between;
+      a {
+        color: $textColor;
+        padding: 0 20px 0 20px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        font-size: $h3FontSize;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+        &:hover {
+          background-color: $mint;
+        }
+      }
+      .menu-bar {
+        display: flex;
+      }
+      .searchInput {
+        display: flex;
+        align-items: center;
+        margin: 0 20px;
+        padding: .3rem 1.5rem;
+        background: hsl(217, 50%, 97%);
+        border-radius: 3rem;
+        .icon {
+          color: $darkGreenColor;
+          font-size: $h2FontSize;
+          cursor: pointer;
+      }
+        input {
+          background: none;
+          outline: none;
+          border: none;
+          margin-left: .5rem;
+
+          &::placeholder {
+              color: var(--textColor);
+              font-weight: 500;
+              outline: none;
+              opacity: .7;
+          }
+      }
+      }
     }
   }

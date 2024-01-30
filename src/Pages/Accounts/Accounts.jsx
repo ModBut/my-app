@@ -1,4 +1,4 @@
-import TopNav from "../../TopNav/TopNav";
+import TopNav from '../TopNav';
 
 export default function Accounts() {
     return (

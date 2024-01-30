@@ -1,6 +1,16 @@
 body {
     padding: 0 !important;
-    background-color: #006B76 !important;
-    font-family: $f4 !important;
+    background-color: $mint !important;
+    font-family: $f1 !important;
     box-sizing: border-box !important;
+
+    #root {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        .app {
+            width: 100%;
+            max-width: 1200px;
+        }
+    }
 }

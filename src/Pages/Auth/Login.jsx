@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import useLogin from "../../Hooks/useLogin";
+import { Auth } from "../../Contexts/Auth";
+import { AFTER_LOGIN_URL, SITE_URL } from "../../Constants/main";
 
 export default function Login() {
 
@@ -9,10 +11,20 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [setInputs, response] = useLogin();
 
-    const submit = () => {
+    const {user} = useContext(Auth);
+
+    const go = () => {
         setInputs({username, password});
+        setPassword('');
     }
 
+    useEffect(() => {
+        if (user) {
+            window.location.href = `${SITE_URL}/${AFTER_LOGIN_URL}`;
+        }
+    }, [user])
+
+    if (!user) {
     return (
         <div className="box">
         <div className='wrapper'>
@@ -37,12 +49,16 @@ export default function Login() {
             <label><input type='checkbox'/>Remember me</label>
             <a href='#home'>Forgot password?</a>
             </div>
-            <button type='button' onClick={submit} className='submit'>Login</button>
+            <button type='button' onClick={go}>Login</button>
             <div className='register-link'>
-                <p>Don't have an account? <a href='#home'>Register</a></p>
+                <p>Don't have an account? <a href='#register'>Register</a></p>
             </div>
         </form>
     </div>
     </div>
     )
+}
+else {
+    return null;
+}
 }

@@ -1,12 +1,16 @@
-import { RouterProvider } from './Login/Contexts/Router';
-import './Style/App.scss';
+import { AuthProvider } from './Contexts/Auth';
+import { RouterProvider } from './Contexts/Router';
+import './Style/app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
   return (
-
-    <RouterProvider>
-    </RouterProvider>
+    <div className='app'>
+    <AuthProvider>
+      <RouterProvider>
+      </RouterProvider>
+    </AuthProvider>
+    </div>
   );
 }
 
