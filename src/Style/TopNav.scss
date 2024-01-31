@@ -13,6 +13,17 @@ nav {
       width: 100%;
       padding-top: 10px;
       justify-content: space-between;
+      span {
+        color: $darkGreenColor;
+        .icon {
+          color: $darkGreenColor;
+          font-size: 25px;
+          font-weight: 600;
+          margin-right: 10px;
+      }
+      }
+      
+      
       a {
         color: $textColor;
         font-size: $h3FontSize;

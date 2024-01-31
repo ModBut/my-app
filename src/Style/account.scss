@@ -1,0 +1,58 @@
+.account-box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    padding: 0 20px 5px;
+   
+    .form-title {
+        border-bottom: 1px solid $mint;
+        h1 {
+            color: $textColor;
+            font-size: 35px;
+            padding: 10px 45px 10px 0;
+            margin: 0;
+        }
+    }
+    
+    .form-body {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid $mint;
+        margin-bottom: 20px;
+        label {
+            font-size: 16px;
+            color: $textColor;
+        }
+        .input-box {
+            width: 40%;
+            input {
+                width: 100%;
+                background: transparent;
+                outline: none;
+                border: 2px solid $textColor;
+                border-radius: 10px;
+                font-size: 16px;
+                color: $textColor;
+                padding: 10px 45px 10px 20px;
+                margin: 10px 0 20px 0;
+            }
+        }
+    }
+    .button {
+        button {
+            width: 40%;
+            height: 45px;
+            background: $mint;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            font-size: 16px;
+            color: $textColor; 
+            margin-bottom: 20px;
+        }
+    }
+}
+

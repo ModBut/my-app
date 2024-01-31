@@ -26,13 +26,13 @@ export default function TopNav() {
             </div>
             <div>
                 {
-                    user && <span><CiUser />{user.user}</span>
+                    user && <span><CiUser className="icon"/>{user.user}</span>
                 }
                 {
                     user && <span> | </span>
                 }
                 {
-                    user && <a onClick={logout}>Logout<CiLogout /></a>
+                    user && <i onClick={logout}>Logout<CiLogout /></i>
                 }
                 {
                     !user && <a href='#register'>Register</a>
@@ -49,7 +49,8 @@ export default function TopNav() {
             <div className="menu-bar">
             <a href="#home">Home</a>
             <a href="#accounts">Accounts</a>
-            <a href="#home">Accounts Statistics</a>
+            <a href="#accounts/create">Add Account</a>
+            <a href="#home">Accounts Statistic</a>
             <a href="#home">Contacts</a>
             </div>
             <div className='searchInput'>
