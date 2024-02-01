@@ -7,6 +7,14 @@ export default function List() {
 
     const {accounts} = useContext(Accounts);
 
+    if (!accounts) 
+        return (
+          <div>
+            <TopNav/>
+            <h1>Loading...</h1>
+          </div>
+      ); 
+
     return (
         <div>
             <TopNav/>

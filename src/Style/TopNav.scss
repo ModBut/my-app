@@ -15,14 +15,27 @@ nav {
       justify-content: space-between;
       span {
         color: $darkGreenColor;
+        font-size: 20px;
+        &.user{
+            font-weight: bold;
+        }
         .icon {
           color: $darkGreenColor;
           font-size: 25px;
           font-weight: 600;
           margin-right: 10px;
+          margin-bottom: 5px;
       }
       }
-      
+      i {
+        font-size: 20px;
+        color: $darkGreenColor;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
       
       a {
         color: $textColor;
@@ -85,3 +98,5 @@ nav {
       }
     }
   }
+
+  

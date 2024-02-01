@@ -48,8 +48,12 @@ export default function TopNav() {
             <div className="login">
             <div className="menu-bar">
             <a href="#home">Home</a>
-            <a href="#accounts">Accounts</a>
-            <a href="#accounts/create">Add Account</a>
+            {
+                user && <a href="#accounts">Accounts</a>
+            }
+            {
+                user && <a href="#accounts/create">Add Account</a>
+            }
             <a href="#home">Accounts Statistic</a>
             <a href="#home">Contacts</a>
             </div>

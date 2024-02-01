@@ -1,6 +1,5 @@
 export default function ShowAccounts({account}) {
 
-
     return (
         <li className='account-box bg-white shadow-sm mb-3'>
             <div className="list-group-item">First Name: <span className="account-list">{account.firstName}</span></div>

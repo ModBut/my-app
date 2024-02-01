@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { SERVER_URL } from '../Constants/main';
-
+import { Auth } from '../Contexts/Auth';
 
 export default function useAccounts() {
 
@@ -10,13 +10,22 @@ export default function useAccounts() {
     const [editAccount, setEditAccount] = useState(null);
     const [deleteAccount, setDeleteAccount] = useState(null);
 
+    const { user, logout } = useContext(Auth);
+
     useEffect(() => {
-        axios.get(`${SERVER_URL}/accounts`)
+        const withTokenUrl = 
+        user ? `${SERVER_URL}/accounts?token=${user.token}` : `${SERVER_URL}/accounts`;
+        axios.get(withTokenUrl)
             .then(res => {
                 setAccounts(res.data);
                 console.log(res.data);
             })
             .catch(err => {
+                if (err.response) {
+                    if (err.response.status === 401) {
+                        logout();
+                    }
+                }
                 console.log(err);
             });
     }, []);
@@ -24,8 +33,9 @@ export default function useAccounts() {
     useEffect(() => {
         if (null !== createAccount) {
             axios.post(`${SERVER_URL}/accounts`, createAccount)
-                .then(() => {
+                .then(res => {
                     setCreatAccount(null);
+                    setAccounts(a => a.map(account => account.id === res.data.uuid ? {...account, id: res.data.id} : account));
                 })
                 .catch(err => {
                     console.log(err);

@@ -52,6 +52,7 @@ export default function Login() {
             <button type='button' onClick={go}>Login</button>
             <div className='register-link'>
                 <p>Don't have an account? <a href='#register'>Register</a></p>
+                <p>Return <a href="#home">Home</a></p>
             </div>
         </form>
     </div>

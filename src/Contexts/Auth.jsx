@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('user');
         setUser(null);
+        window.location.href = '#login';
     }
 
     const login = (token, user) => {
