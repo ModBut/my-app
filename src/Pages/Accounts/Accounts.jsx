@@ -4,6 +4,7 @@ import Page404 from '../Page404';
 import List from './List';
 import Create from './Create';
 import { AccountsProvider } from '../../Contexts/Accounts';
+import Edit from './Edit';
 
 export default function Accounts() {
 
@@ -16,6 +17,9 @@ export default function Accounts() {
 
     } else if (params.length === 1 && params[0] === 'create') {
         returnComponent = <Create />;
+
+    } else if (params.length === 2 && params[0] === 'edit') {
+        returnComponent = <Edit/>
     }
 
     return (

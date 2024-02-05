@@ -19,7 +19,12 @@ export default function List() {
         <div>
             <TopNav/>
             <div className='account-box bg-white shadow-sm mb-3'>
-            <h1>Accounts List</h1>
+              <div className="form-title">
+                <h1>Accounts List</h1>
+              </div>
+              <div>Accounts Statistic</div>
+              <div>Total accounts number:</div>
+              <div>Total accounts balance:</div>
             </div>
             <div>
             <ul className="list-group list-group">

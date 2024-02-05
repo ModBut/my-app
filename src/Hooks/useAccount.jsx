@@ -43,6 +43,19 @@ export default function useAccounts() {
         }
     }, [createAccount]);
 
+    useEffect(() => {
+        if (editAccount !== null) {
+            axios.put(`${SERVER_URL}/accounts/${editAccount.id}`, editAccount)
+                .then(res => {
+                    setEditAccount(null);
+                    setAccounts(a => a.map(account => account.id === res.data.id ? { ...res.data } : account));
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }
+    }, [editAccount]);
+
     return {
         accounts, 
         setAccounts,
