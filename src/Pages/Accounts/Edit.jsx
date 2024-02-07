@@ -5,12 +5,11 @@ import { Router } from "../../Contexts/Router";
 
 export default function Edit() {
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
     const [account, setAccount] = useState(null);
     const [transactionAmount, setTransactionAmount] = useState(0);
+    const [error, setError] = useState('');
     const {accounts, setAccounts, setEditAccount} = useContext(Accounts);
-    const params = useContext(Router);
+    const {params} = useContext(Router);
 
     useEffect(() => {
         if (null === accounts) {
@@ -28,9 +27,8 @@ export default function Edit() {
         if (null === account) {
             return;
         }
-        setFirstName(account.firstName);
-        setLastName(account.lastName);
-    }, [account, setFirstName, setLastName]);
+    }, [account]);
+
 
     if (!accounts) 
         return (
@@ -51,8 +49,7 @@ export default function Edit() {
       const addFunds = () => {
         const amount = parseFloat(transactionAmount);
         const updatedAccount = { ...account, accountBalance: +account.accountBalance + amount };
-        setAccount(updatedAccount); // Update local state
-        // setAccounts(updatedAccount); // Update account balance on the server
+        setAccount(updatedAccount);
         setTransactionAmount(0);
     };
 
@@ -62,8 +59,13 @@ export default function Edit() {
             const updatedAccount = { ...account, accountBalance: account.accountBalance - amount };
             setAccount(updatedAccount);
             setTransactionAmount(0);
+        } else {
+            setError('Nepakanka lėšų');
+            setTransactionAmount(0);
         }
     };
+
+    
 
       const save = () => {
         const editedAccount = { 
@@ -83,8 +85,8 @@ export default function Edit() {
                     <h1>Edit Account Balance</h1>
                 </div>
                 <div className="form-body">
-                    <div>First Name: {firstName}</div>
-                    <div>Last Name: {lastName}</div>
+                    <div>First Name: {account.firstName}</div>
+                    <div>Last Name: {account.lastName}</div>
                     <div>Account Balance: {account.accountBalance} €</div>
                     <div>
                         <label>Enter amount: </label>
@@ -92,7 +94,9 @@ export default function Edit() {
                         <button type='button' onClick={addFunds}>Add Funds</button>
                         <button type='button' onClick={withdrawFunds}>Withdraw Funds</button>
                         <button type='button' onClick={save}>Save</button>
+                        <button type="button" onClick={() => window.location.href = '#accounts'}>Cancle</button>
                     </div>
+                    <div>{error}</div>
                 </div>
             </div>
             </>

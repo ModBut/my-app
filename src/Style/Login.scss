@@ -12,8 +12,7 @@
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(30px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    color: $textColor; 
-    border-radius: 10px;
+    color: $textColor;
     padding: 30px 40px;
     h1 {
         font-size: 36px;
@@ -43,7 +42,6 @@
             background: transparent;
             outline: none;
             border: 2px solid $textColor;
-            border-radius: 10px;
             font-size: 16px;
             color: $textColor;
             padding: 20px 45px 20px 20px;

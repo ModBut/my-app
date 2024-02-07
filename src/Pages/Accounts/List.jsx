@@ -1,11 +1,19 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TopNav from '../TopNav';
 import { Accounts } from '../../Contexts/Accounts';
 import ShowAccounts from './ShowAccounts';
 
 export default function List() {
 
-    const {accounts} = useContext(Accounts);
+  const [totalAccounts, setTotalAccounts] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
+  
+  const {accounts, setFilterAccountBalance, filterAccountBalance} = useContext(Accounts);
+
+  useEffect(() => {
+    setTotalAccounts(accounts.length);
+    setTotalBalance(accounts.reduce((sum, account) => sum + +account.accountBalance, 0));
+  }, [accounts]);
 
     if (!accounts) 
         return (
@@ -23,11 +31,17 @@ export default function List() {
                 <h1>Accounts List</h1>
               </div>
               <div>Accounts Statistic</div>
-              <div>Total accounts number:</div>
-              <div>Total accounts balance:</div>
+              <div>Total accounts number: {totalAccounts}</div>
+              <div>Total accounts balance: {totalBalance} €</div>
             </div>
+            <label>Filter by Account Balance:</label>
+            <select  value={filterAccountBalance} onChange={e => setFilterAccountBalance(e.target.value)}>
+                <option value="all">All Accounts</option>
+                <option value="empty-accounts">Empty Accounts</option>
+                <option value="accounts-with-funds">Accounts with Funds</option>
+            </select>
             <div>
-            <ul className="list-group list-group">
+            <ul className="list-group list-group shadow-sm">
               {accounts
                 .sort((a, b) => a.lastName.localeCompare(b.lastName))
                 .map((account) => (

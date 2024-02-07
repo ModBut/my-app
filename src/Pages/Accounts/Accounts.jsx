@@ -5,10 +5,12 @@ import List from './List';
 import Create from './Create';
 import { AccountsProvider } from '../../Contexts/Accounts';
 import Edit from './Edit';
+import Delete from './Delete';
+import PageGate from '../Auth/PageGate';
 
 export default function Accounts() {
 
-    const params = useContext(Router);
+    const {params} = useContext(Router);
 
     let returnComponent = <Page404 />;
 
@@ -16,10 +18,13 @@ export default function Accounts() {
         returnComponent = <List />;
 
     } else if (params.length === 1 && params[0] === 'create') {
-        returnComponent = <Create />;
+        returnComponent = <PageGate roles='admin|user'><Create /></PageGate>;
 
     } else if (params.length === 2 && params[0] === 'edit') {
-        returnComponent = <Edit/>
+        returnComponent = <PageGate roles='admin|user'><Edit /></PageGate>
+
+    } else if (params.length === 2 && params[0] === 'delete') {
+        returnComponent = <PageGate roles='admin'><Delete /></PageGate>
     }
 
     return (

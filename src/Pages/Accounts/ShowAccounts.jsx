@@ -1,3 +1,5 @@
+import Gate from "../Auth/Gate";
+
 export default function ShowAccounts({account}) {
 
     return (
@@ -6,8 +8,10 @@ export default function ShowAccounts({account}) {
             <div className="list-group-item">Last Name: <span className="account-list">{account.lastName}</span></div>
             <div className="list-group-item">Account Number: <span className="account-list">{account.accountNumber}</span></div>
             <div className="list-group-item">Account Balance: <span className="account-list">{account.accountBalance} €</span></div>
-            <button><a href={'#accounts/edit/' + account.id}>Edit Account Balance</a></button>
-            <button>Delete Account</button>
+            <div className="button right">
+            <Gate roles='admin|user'><button><a href={'#accounts/edit/' + account.id}>Edit Account Balance</a></button></Gate>
+            <Gate roles='admin'><button><a href={'#accounts/delete/' + account.id}>Delete Account</a></button></Gate>
+            </div>
         </li>
     )
 }

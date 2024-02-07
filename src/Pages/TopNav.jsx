@@ -4,6 +4,7 @@ import { Auth } from "../Contexts/Auth";
 import { CiUser } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
 import { AiOutlineSearch } from "react-icons/ai";
+import Gate from "./Auth/Gate";
 
 export default function TopNav() {
 
@@ -48,12 +49,8 @@ export default function TopNav() {
             <div className="login">
             <div className="menu-bar">
             <a href="#home">Home</a>
-            {
-                user && <a href="#accounts">Accounts</a>
-            }
-            {
-                user && <a href="#accounts/create">Add Account</a>
-            }
+            <Gate roles='admin|user|animal'><a href="#accounts">Accounts</a></Gate>
+            <Gate roles='admin|user'><a href="#accounts/create">Add Account</a></Gate>
             <a href="#home">Accounts Statistic</a>
             <a href="#home">Contacts</a>
             </div>

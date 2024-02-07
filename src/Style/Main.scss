@@ -20,3 +20,22 @@ body {
         list-style: none;
     }
 }
+
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    h1 {
+        font-size: 50px;
+        color: $textColor;
+    }
+    a {
+        text-decoration: none;
+        color: $textColor;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+}

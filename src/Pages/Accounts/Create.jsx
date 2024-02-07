@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function Create(){
 
-
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
@@ -40,6 +39,7 @@ export default function Create(){
     return (
         <>
             <TopNav/>
+            
             <div className="account-box bg-white shadow-sm mb-3">
                 <div className="form-title">
                     <h1>Add New Accounts</h1>

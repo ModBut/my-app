@@ -4,7 +4,9 @@ export default function Home() {
     return (
         <div>
             <TopNav/>
-            <h1>Home</h1>
+            <div className="account-box bg-white shadow-sm mb-3">
+                <h1>Home</h1>
+            </div>
         </div>
     )
 }
