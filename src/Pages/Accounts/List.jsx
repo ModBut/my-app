@@ -15,14 +15,15 @@ export default function List() {
     setTotalBalance(accounts.reduce((sum, account) => sum + +account.accountBalance, 0));
   }, [accounts]);
 
-    if (!accounts) 
-        return (
-          <div>
-            <TopNav/>
-            <h1>Loading...</h1>
-          </div>
-      ); 
+  if (!accounts) 
+    return (
+      <div>
+          <TopNav />
+          <h1>Loading...</h1>
+      </div>
+    );
 
+      
     return (
         <div>
             <TopNav/>

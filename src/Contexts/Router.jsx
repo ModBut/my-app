@@ -2,9 +2,9 @@ import { createContext, useEffect, useState } from "react";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Auth/Login";
 import Accounts from "../Pages/Accounts/Accounts";
-import Register from "../Pages/Register/Register";
 import Page404 from "../Pages/Page404";
 import Page401 from "../Pages/Page401";
+import Register from "../Pages/Users/Register";
 
 
 export const Router = createContext();
@@ -48,7 +48,7 @@ export const RouterProvider = ({ children }) => {
         {path: '#home', component: <Home/>},
         {path: '#accounts', component: <Accounts/>},
         {path: '#login', component: <Login/>},
-        {path: '#register', component: <Register/>}
+        {path: '#register', component: <Register to='register'/>},
     ];
 
     const routeComponent = routes.find(r => r.path === route)?.component || <Page404/>;
