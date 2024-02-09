@@ -39,3 +39,17 @@ body {
         text-decoration: underline;
     }
 }
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    position: fixed;
+    top: 30px;
+    right: 50px;
+    .alert {
+      width: 100%;
+    }
+}

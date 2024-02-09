@@ -1,12 +1,20 @@
-import TopNav from "../TopNav";
+import Page404 from '../Page404';
+import { AccountsProvider } from '../../Contexts/Accounts';
+import AccountStatistic from './AccountStatistic';
 
-export default function Home() {
+
+export default function Home({to}) {
+
+    let returnComponent = <Page404 />;
+
+    if (to === 'accountstatistic') {
+        returnComponent = <AccountStatistic/>
+    }
+
     return (
-        <div>
-            <TopNav/>
-            <div className="account-box bg-white shadow-sm mb-3">
-                <h1>Home</h1>
-            </div>
-        </div>
+     
+        <AccountsProvider>
+        {returnComponent}
+        </AccountsProvider>
     )
 }

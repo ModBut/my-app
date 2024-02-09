@@ -5,6 +5,7 @@ import Accounts from "../Pages/Accounts/Accounts";
 import Page404 from "../Pages/Page404";
 import Page401 from "../Pages/Page401";
 import Register from "../Pages/Users/Register";
+import Profile from "../Pages/Users/Profile";
 
 
 export const Router = createContext();
@@ -45,10 +46,12 @@ export const RouterProvider = ({ children }) => {
     }, []);
 
     const routes = [
-        {path: '#home', component: <Home/>},
+        {path: '#home', component: <Home to='accountstatistic'/>},
         {path: '#accounts', component: <Accounts/>},
         {path: '#login', component: <Login/>},
         {path: '#register', component: <Register to='register'/>},
+        {path: '#users', component: <Register />},
+        {path: '#profile', component: <Profile/>}
     ];
 
     const routeComponent = routes.find(r => r.path === route)?.component || <Page404/>;

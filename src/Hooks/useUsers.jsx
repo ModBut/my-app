@@ -20,6 +20,11 @@ export default function useUsers() {
             return;
         }
 
+        if ('admin' !== user.role) {
+            setUsers([{name: user.user, id: +user.id, role: user.role}])
+            return;
+        }
+
         const withTokenUrl = 
         user ? `${SERVER_URL}/users?token=${user.token}` : `${SERVER_URL}/users`;
 
@@ -37,6 +42,7 @@ export default function useUsers() {
                         show401Page();
                     }
                 }
+                setUsers({error: true})
             });
     }, []);
 
@@ -51,6 +57,59 @@ export default function useUsers() {
                 });
         }
     }, [createUser]);
+
+    useEffect(_ => {
+        if (null !== editUser) {
+
+            const withTokenUrl = 
+            user ? `${SERVER_URL}/users/${editUser.id}?token=${user.token}` : `${SERVER_URL}/users/${editUser.id}`;
+            
+            axios.put(withTokenUrl, editUser)
+                .then(res => {
+                    setEditUser(null);
+                    setUsers(f => f.map(user => user.id === res.data.id ? {...user} : user));
+                })
+                .catch(err => {
+                    setEditUser(null);
+                    setUsers(f => f.map(user => user.id === editUser.id ? {...user} : user));
+                    if (err.response) {
+                        console.log(err.response);
+                        if (err.response.status === 401) {
+                            if (err.response.data.status === 'login') {
+                                logout();
+                            }
+                            show401Page();
+                        }
+                    }
+                });
+        }
+    }, [editUser]);
+
+    useEffect(_ => {
+        if (null !== deleteUser) {
+
+            const withTokenUrl = 
+            user ? `${SERVER_URL}/users/${deleteUser}?token=${user.token}` : `${SERVER_URL}/users/${deleteUser}`;
+
+            axios.delete(withTokenUrl)
+                .then(res => {
+                    setDeleteUser(null);
+                    setUsers(f => f.filter(user => user.id !== res.data.id));
+                })
+                .catch(err => {
+                    setDeleteUser(null);
+                    setUsers(f => f.map(user => user.id === deleteUser ? {...user} : user));
+                    if (err.response) {
+                        if (err.response.status === 401) {
+                            if (err.response.data.status === 'login') {
+                                logout();
+                            }
+                            show401Page();
+                        }
+                    }
+                });
+        }
+    }, [deleteUser]);
 
 
     return {

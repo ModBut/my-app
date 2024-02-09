@@ -27,7 +27,7 @@ export default function TopNav() {
             </div>
             <div>
                 {
-                    user && <span><CiUser className="icon"/>{user.user}</span>
+                    user && <span><a href='#profile'><CiUser className="icon"/>{user.user}</a></span>
                 }
                 {
                     user && <span> | </span>
@@ -51,8 +51,9 @@ export default function TopNav() {
             <a href="#home">Home</a>
             <Gate roles='admin|user|animal'><a href="#accounts">Accounts</a></Gate>
             <Gate roles='admin|user'><a href="#accounts/create">Add Account</a></Gate>
-            <a href="#home">Accounts Statistic</a>
-            <a href="#home">Contacts</a>
+            <Gate roles='admin'><a href="#users">Users</a></Gate>
+            <a href="#statistic">Accounts Statistic</a>
+            <a href="#contacts">Contacts</a>
             </div>
             <div className='searchInput'>
                 <AiOutlineSearch className='icon'/>

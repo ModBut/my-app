@@ -8,7 +8,7 @@ export default function Create(){
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
-    const {setCreatAccount, setAccounts } =  useContext(Accounts);
+    const {setCreatAccount, setAccounts} =  useContext(Accounts);
 
     const accountNumber = generateAccountNumber();
         function generateAccountNumber() {
@@ -58,7 +58,6 @@ export default function Create(){
                     <button type="button" onClick={add}>Add</button>
                 </div>
             </div>
-            
         </>
     )
 }

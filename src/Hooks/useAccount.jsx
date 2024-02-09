@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import axios from 'axios';
 import { SERVER_URL } from '../Constants/main';
 import { Auth } from '../Contexts/Auth';
 import { Router } from '../Contexts/Router';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function useAccounts() {
 
@@ -11,11 +12,40 @@ export default function useAccounts() {
     const [editAccount, setEditAccount] = useState(null);
     const [deleteAccount, setDeleteAccount] = useState(null);
     const [filterAccountBalance, setFilterAccountBalance] = useState('all');
+    const [messages, setMessages] = useState([]);
+    const [totalCount, setTotalCount] = useState(null);
+    const [totalBalance, setTotalBalance] = useState(null);
 
     const { user, logout } = useContext(Auth);
     const { show401Page } = useContext(Router);
 
+    const addMessage = useCallback((type, text) => {
+        const id = uuidv4();
+        setMessages((prevMessages) => [{ id, type, text }, ...prevMessages]);
+        setTimeout(() => {
+          setMessages((prevMessages) => prevMessages.filter((m) => m.id !== id));
+        }, 4000);
+      }, []);
+
+      useEffect(() => {
+        if (user) {
+            return;
+        }
+        axios.get(`${SERVER_URL}/home`)
+          .then(res => {
+            setTotalBalance(res.data.totalBalance);
+            setTotalCount(res.data.totalCount);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }, []);
+
+
     useEffect(() => {
+        if (null === user) {
+            return;
+        }
             const withTokenUrl = 
             user ? `${SERVER_URL}/accounts?token=${user.token}` : `${SERVER_URL}/accounts`;
             axios.get(withTokenUrl)
@@ -32,7 +62,7 @@ export default function useAccounts() {
                         show401Page();
                     }
                 }
-            });
+            })
     }, []);
 
     useEffect(() => {
@@ -45,6 +75,7 @@ export default function useAccounts() {
                 .then(res => {
                     setCreatAccount(null);
                     setAccounts(a => a.map(account => account.id === res.data.uuid ? {...account, id: res.data.id} : account));
+                    addMessage(res.data.type, res.data.message);
                 })
                 .catch(err => {
                     setCreatAccount(null);
@@ -71,6 +102,7 @@ export default function useAccounts() {
                 .then(res => {
                     setEditAccount(null);
                     setAccounts(a => a.map(account => account.id === res.data.id ? { ...account } : account));
+                    addMessage(res.data.type, res.data.message);
                 })
                 .catch(err => {
                     setEditAccount(null);
@@ -94,9 +126,10 @@ export default function useAccounts() {
             user ? `${SERVER_URL}/accounts/${deleteAccount}?token=${user.token}` : `${SERVER_URL}/accounts/${deleteAccount}`;
 
             axios.delete(withTokenUrl)
-                .then(() => {
+                .then(res => {
                     setDeleteAccount(null);
                     setAccounts(a => a.filter(account => account.id !== deleteAccount));
+                    addMessage(res.data.type, res.data.message);
                 })
                 .catch(err => {
                     setDeleteAccount(null);
@@ -130,6 +163,9 @@ export default function useAccounts() {
         deleteAccount, 
         setDeleteAccount,
         filterAccountBalance,
-        setFilterAccountBalance
+        setFilterAccountBalance,
+        messages,
+        totalCount,
+        totalBalance
     };
 }

@@ -6,7 +6,7 @@ export const Accounts = createContext();
 export const AccountsProvider = ({children}) => {
 
 
-    const {accounts, setAccounts, createAccount, setCreatAccount, editAccount, setEditAccount, deleteAccount, setDeleteAccount, filterAccountBalance, setFilterAccountBalance} = useAccounts();
+    const {accounts, setAccounts, createAccount, setCreatAccount, editAccount, setEditAccount, deleteAccount, setDeleteAccount, filterAccountBalance, setFilterAccountBalance, messages, totalCount, totalBalance} = useAccounts();
 
     return (
         <Accounts.Provider value={{
@@ -14,7 +14,9 @@ export const AccountsProvider = ({children}) => {
             createAccount, setCreatAccount,
             editAccount, setEditAccount,
             deleteAccount, setDeleteAccount,
-            filterAccountBalance, setFilterAccountBalance
+            filterAccountBalance, setFilterAccountBalance,
+            messages, totalCount,
+            totalBalance
         }}>
             {children}
         </Accounts.Provider>

@@ -2,13 +2,14 @@ import { useContext, useEffect, useState } from 'react';
 import TopNav from '../TopNav';
 import { Accounts } from '../../Contexts/Accounts';
 import ShowAccounts from './ShowAccounts';
+import Messages from "../Messages";
 
 export default function List() {
 
   const [totalAccounts, setTotalAccounts] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
   
-  const {accounts, setFilterAccountBalance, filterAccountBalance} = useContext(Accounts);
+  const {accounts, setFilterAccountBalance, filterAccountBalance, messages} = useContext(Accounts);
 
   useEffect(() => {
     setTotalAccounts(accounts.length);
@@ -50,6 +51,7 @@ export default function List() {
                 ))}
             </ul>
             </div>
+            <Messages messages={messages}/>
         </div>
     )
 }
