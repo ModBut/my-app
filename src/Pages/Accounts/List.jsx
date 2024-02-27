@@ -28,20 +28,20 @@ export default function List() {
     return (
         <div>
             <TopNav/>
-            <div className='account-box bg-white shadow-sm mb-3'>
+            <div className='account-box bg-white shadow-sm mb-3 flex'>
               <div className="form-title">
                 <h1>Accounts List</h1>
               </div>
               <div>Accounts Statistic</div>
               <div>Total accounts number: {totalAccounts}</div>
               <div>Total accounts balance: {totalBalance} €</div>
-            </div>
-            <label>Filter by Account Balance:</label>
+              <label>Filter by Account Balance:</label>
             <select  value={filterAccountBalance} onChange={e => setFilterAccountBalance(e.target.value)}>
                 <option value="all">All Accounts</option>
                 <option value="empty-accounts">Empty Accounts</option>
                 <option value="accounts-with-funds">Accounts with Funds</option>
             </select>
+            </div>
             <div>
             <ul className="list-group list-group shadow-sm">
               {accounts

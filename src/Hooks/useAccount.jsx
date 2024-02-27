@@ -51,7 +51,7 @@ export default function useAccounts() {
             axios.get(withTokenUrl)
                 .then(res => {
                     setAccounts(res.data);
-                    console.log(res.data);
+                   
                 })
                 .catch(err => {
                     if (err.response) {
