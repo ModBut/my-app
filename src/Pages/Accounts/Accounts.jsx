@@ -7,6 +7,8 @@ import { AccountsProvider } from '../../Contexts/Accounts';
 import Edit from './Edit';
 import Delete from './Delete';
 import PageGate from '../Auth/PageGate';
+import BlockAccount from './BlockAccount';
+
 
 export default function Accounts() {
 
@@ -25,11 +27,16 @@ export default function Accounts() {
 
     } else if (params.length === 2 && params[0] === 'delete') {
         returnComponent = <PageGate roles='admin'><Delete /></PageGate>
+
+    } else if (params.length === 2 && params[0] === 'block') {
+        returnComponent = <PageGate roles='admin'><BlockAccount /></PageGate>
     }
 
     return (
+
         <AccountsProvider>
             {returnComponent}
         </AccountsProvider>
+  
     )
 }

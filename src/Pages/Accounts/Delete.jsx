@@ -7,7 +7,7 @@ export default function Delete(){
 
     const [account, setAccount] = useState(null);
     const [error, setError] = useState('');
-    const {setDeleteAccount, setAccounts, accounts } =  useContext(Accounts);
+    const {setDeleteAccount, setAccounts, accounts} =  useContext(Accounts);
     const {params} = useContext(Router);
 
     useEffect(() => {
@@ -20,10 +20,18 @@ export default function Delete(){
         } else {
             setAccount(account);
         }
-    }, [accounts, params[1]]);
+    }, [accounts, params]);
+
+    if (account?.blocked) 
+    return (
+            <div>
+                <TopNav/>
+                <h1>Account Not Found</h1>
+            </div>
+    ); 
 
     const doDelete = () => {
-        if (+account.accountBalance === 0) {
+        if (account.accountBalance === 0) {
             const accountid = account.id;
             setAccounts(a => a.filter(account => account.id === accountid ? {...account, preEdit: account} : account));
             setDeleteAccount(accountid);

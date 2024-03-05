@@ -1,20 +1,13 @@
-import Page404 from '../Page404';
-import { AccountsProvider } from '../../Contexts/Accounts';
-import AccountStatistic from './AccountStatistic';
+import { StatisticProvider } from "../../Contexts/Statistic";
+import Layout from "./Statistic";
 
 
-export default function Home({to}) {
+export default function Home() {
 
-    let returnComponent = <Page404 />;
-
-    if (to === 'accountstatistic') {
-        returnComponent = <AccountStatistic/>
-    }
 
     return (
-     
-        <AccountsProvider>
-        {returnComponent}
-        </AccountsProvider>
+        <StatisticProvider>
+            <Layout/>
+        </StatisticProvider>
     )
 }

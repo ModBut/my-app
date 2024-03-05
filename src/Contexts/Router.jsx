@@ -6,6 +6,7 @@ import Page404 from "../Pages/Page404";
 import Page401 from "../Pages/Page401";
 import Register from "../Pages/Users/Register";
 import Profile from "../Pages/Users/Profile";
+import { MessagesProvider } from "./Messages";
 
 
 export const Router = createContext();
@@ -46,7 +47,7 @@ export const RouterProvider = ({ children }) => {
     }, []);
 
     const routes = [
-        {path: '#home', component: <Home to='accountstatistic'/>},
+        {path: '#home', component: <Home />},
         {path: '#accounts', component: <Accounts/>},
         {path: '#login', component: <Login/>},
         {path: '#register', component: <Register to='register'/>},
@@ -58,7 +59,9 @@ export const RouterProvider = ({ children }) => {
 
     return (
         <Router.Provider value={{params, show401Page}}>
+            <MessagesProvider>
             {notAuthorized ?? routeComponent}
+            </MessagesProvider>
         </Router.Provider>
     )
 }

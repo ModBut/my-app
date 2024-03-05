@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext, useEffect, useState} from "react";
 import axios from 'axios';
 import { SERVER_URL } from '../Constants/main';
 import { Auth } from '../Contexts/Auth';
 import { Router } from '../Contexts/Router';
-import { v4 as uuidv4 } from 'uuid';
+
+
 
 export default function useAccounts() {
 
@@ -12,36 +13,21 @@ export default function useAccounts() {
     const [editAccount, setEditAccount] = useState(null);
     const [deleteAccount, setDeleteAccount] = useState(null);
     const [filterAccountBalance, setFilterAccountBalance] = useState('all');
-    const [messages, setMessages] = useState([]);
-    const [totalCount, setTotalCount] = useState(null);
-    const [totalBalance, setTotalBalance] = useState(null);
+    const [blocked, setBlocked] = useState(false);
 
     const { user, logout } = useContext(Auth);
+
     const { show401Page } = useContext(Router);
 
-    const addMessage = useCallback((type, text) => {
-        const id = uuidv4();
-        setMessages((prevMessages) => [{ id, type, text }, ...prevMessages]);
-        setTimeout(() => {
-          setMessages((prevMessages) => prevMessages.filter((m) => m.id !== id));
-        }, 4000);
-      }, []);
 
-      useEffect(() => {
-        if (user) {
-            return;
-        }
-        axios.get(`${SERVER_URL}/home`)
-          .then(res => {
-            setTotalBalance(res.data.totalBalance);
-            setTotalCount(res.data.totalCount);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }, []);
+    const sorts = [
+        {name: 'default', value: 'default'},
+        {name: 'accountBalance_asc', value: 'accountBalance 1-9'},
+        {name: 'accountBalance_desc', value: 'accountBalance 9-1'},
+      ]
+      const [sort, setSort] = useState('default');
 
-
+  
     useEffect(() => {
         if (null === user) {
             return;
@@ -51,7 +37,10 @@ export default function useAccounts() {
             axios.get(withTokenUrl)
                 .then(res => {
                     setAccounts(res.data);
-                   
+                    setAccounts(accounts => accounts.map(account => ({
+                        ...account,
+                        image: account.image ? SERVER_URL + '/' + account.image : null
+                    })));
                 })
                 .catch(err => {
                     if (err.response) {
@@ -63,19 +52,17 @@ export default function useAccounts() {
                     }
                 }
             })
-    }, []);
+    }, [sort]);
 
     useEffect(() => {
         if (null !== createAccount) {
-
             const withTokenUrl = 
             user ? `${SERVER_URL}/accounts?token=${user.token}` : `${SERVER_URL}/accounts`;
-
             axios.post(withTokenUrl, createAccount)
                 .then(res => {
                     setCreatAccount(null);
                     setAccounts(a => a.map(account => account.id === res.data.uuid ? {...account, id: res.data.id} : account));
-                    addMessage(res.data.type, res.data.message);
+            
                 })
                 .catch(err => {
                     setCreatAccount(null);
@@ -92,17 +79,21 @@ export default function useAccounts() {
         }
     }, [createAccount]);
 
+
     useEffect(() => {
         if (null !== editAccount) {
-
             const withTokenUrl = 
             user ? `${SERVER_URL}/accounts/${editAccount.id}?token=${user.token}` : `${SERVER_URL}/accounts/${editAccount.id}`;
-        
-            axios.put(withTokenUrl, editAccount)
+            const toServer = {...editAccount}
+            if (editAccount.image === editAccount.old.image) {
+                toServer.image = null;
+            }
+            console.log(toServer)
+            axios.put(withTokenUrl, toServer)
                 .then(res => {
                     setEditAccount(null);
                     setAccounts(a => a.map(account => account.id === res.data.id ? { ...account } : account));
-                    addMessage(res.data.type, res.data.message);
+                 
                 })
                 .catch(err => {
                     setEditAccount(null);
@@ -124,12 +115,12 @@ export default function useAccounts() {
 
             const withTokenUrl = 
             user ? `${SERVER_URL}/accounts/${deleteAccount}?token=${user.token}` : `${SERVER_URL}/accounts/${deleteAccount}`;
-
+            
             axios.delete(withTokenUrl)
                 .then(res => {
                     setDeleteAccount(null);
                     setAccounts(a => a.filter(account => account.id !== deleteAccount));
-                    addMessage(res.data.type, res.data.message);
+
                 })
                 .catch(err => {
                     setDeleteAccount(null);
@@ -148,8 +139,10 @@ export default function useAccounts() {
 
     const filteredAccounts = accounts.filter(account => {
         if (filterAccountBalance === 'all') return true;
-        if (filterAccountBalance === 'empty-accounts') return +account.accountBalance === 0;
-        if (filterAccountBalance === 'accounts-with-funds') return +account.accountBalance > 0;
+        if (filterAccountBalance === 'empty-accounts') return account.accountBalance === 0;
+        if (filterAccountBalance === 'accounts-with-funds') return account.accountBalance > 0;
+        if (filterAccountBalance === 'accounts-with--funds') return account.accountBalance < 0;
+        
         return true;
     });
 
@@ -164,8 +157,9 @@ export default function useAccounts() {
         setDeleteAccount,
         filterAccountBalance,
         setFilterAccountBalance,
-        messages,
-        totalCount,
-        totalBalance
+        blocked, 
+        setBlocked,
+        sorts,
+        setSort, sort,
     };
 }

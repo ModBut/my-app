@@ -3,7 +3,7 @@ import { CiLogin } from "react-icons/ci";
 import { Auth } from "../Contexts/Auth";
 import { CiUser } from "react-icons/ci";
 import { CiLogout } from "react-icons/ci";
-import { AiOutlineSearch } from "react-icons/ai";
+// import { AiOutlineSearch } from "react-icons/ai";
 import Gate from "./Auth/Gate";
 
 export default function TopNav() {
@@ -55,10 +55,10 @@ export default function TopNav() {
             <a href="#statistic">Accounts Statistic</a>
             <a href="#contacts">Contacts</a>
             </div>
-            <div className='searchInput'>
+            {/* <div className='searchInput'>
                 <AiOutlineSearch className='icon'/>
                 <input type='text' placeholder='Search for anything...'/>
-            </div>
+            </div> */}
             </div>
         </nav>
         </>

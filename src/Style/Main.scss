@@ -45,11 +45,55 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 350px;
+    padding: 20px;
     position: fixed;
-    top: 30px;
-    right: 50px;
-    .alert {
-      width: 100%;
+    right: 0;
+    border-radius: none;
+}
+
+.sort-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 20px 0;
+    gap: 20px;
+  
+    label {
+      font-size: 17px;
+      color: $textColor;
+      cursor: pointer;
+      padding: 5px;
+      transition: all 0.2s;
+      user-select: none;
+      border: 1px solid #9BC1BC;
+  
+      &:hover {
+        background-color: #9BC1BC;
+      }
+    }
+
+    select {
+        font-size: 17px;
+        color: $textColor;
+        cursor: pointer;
+        padding: 6px;
+        transition: all 0.2s;
+        user-select: none;
+        border: 1px solid #9BC1BC;
+    }
+  
+  }
+
+.dropdown {
+    button {
+        font-size: 17px;
+        color: $textColor;
+        cursor: pointer;
+        padding: 5px;
+        transition: all 0.2s;
+        user-select: none;
+        border: 1px solid #9BC1BC;
+        background-color: #fff;
     }
 }
