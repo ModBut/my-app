@@ -7,7 +7,6 @@ import { SERVER_URL } from '../../Constants/main';
 import { Auth } from '../../Contexts/Auth';
 
 
-
 export default function List() {
 
   const [totalAccounts, setTotalAccounts] = useState(0);
@@ -15,14 +14,12 @@ export default function List() {
 
   const { user} = useContext(Auth);
 
-  const {accounts, setFilterAccountBalance, filterAccountBalance, setAccounts, editAccount, setEditAccount} = useContext(Accounts);
+  const {accounts, setFilterAccountBalance, filterAccountBalance, setAccounts, editAccount, setEditAccount, filterBlockedAccount, setFilterBlockedAccount} = useContext(Accounts);
 
   useEffect(() => {
     setTotalAccounts(accounts.length);
     setTotalBalance(accounts.reduce((sum, account) => sum + account.accountBalance, 0));
   }, [accounts]);
-
-  
 
   const sortedAccounts = () => {
     const sortedArray = [...accounts].sort((a, b) => a.lastName.localeCompare(b.lastName));
@@ -70,6 +67,7 @@ export default function List() {
   };
 
 
+
   if (!accounts) 
     return (
       <div>
@@ -89,23 +87,27 @@ export default function List() {
               <div>Accounts Statistic</div>
               <div>Total accounts number: {totalAccounts}</div>
               <div>Total accounts balance: {totalBalance.toFixed(2)} €</div>
-
             <div className='sort-box'>
-            <select  value={filterAccountBalance} onChange={e => setFilterAccountBalance(e.target.value)}>
-                <option value="all">Filter Account Balance</option>
-                <option value="all">All Accounts</option>
-                <option value="empty-accounts">Empty Accounts</option>
-                <option value="accounts-with-funds">Accounts with Funds</option>
-                <option value="accounts-with--funds">Accounts with - Funds</option>
-            </select>
-            <div class="dropdown">
+              <select  value={filterBlockedAccount} onChange={e => setFilterBlockedAccount(e.target.value)}>
+                  <option value="all">All Accounts</option>
+                  <option value="blocked">Blocked Accounts</option>
+                  <option value="notblocked">Not Blocked Accounts</option>
+              </select>
+              <select  value={filterAccountBalance} onChange={e => setFilterAccountBalance(e.target.value)}>
+                  <option value="all">All Accounts</option>
+                  <option value="empty-accounts">Empty Accounts</option>
+                  <option value="accounts-with-funds">Accounts with Funds</option>
+                  <option value="accounts-with--funds">Accounts with Negative Funds</option>
+              </select>
+            <div className="dropdown">
                 <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Sort Accounts
                 </button>
                 <ul className="dropdown-menu">
+                  <li><label onClick={() => sortAccountsByBalance(null)}>All Accounts</label></li>
                   <li><label onClick={() => sortAccountsByBalance('asc')}> Balance low to high</label></li>
                   <li><label onClick={() => sortAccountsByBalance('desc')}>Balance high to low</label></li>
-                  <li onClick={sortedAccounts}>Accounts by last name</li>
+                  <li><label onClick={sortedAccounts}>Accounts by last name</label></li>
                 </ul>
             </div>
             <label onClick={handlePayment}>Payment</label>

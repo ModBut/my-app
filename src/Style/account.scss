@@ -71,4 +71,32 @@
     opacity: 0.5;
 }
 
+.modal {
+    display: block;
+    background-color: #00000080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+    .modalContainer {
+        width: 500px;
+        height: 400px;
+        background-color: #ffffffde;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        display: flex;
+        flex-direction: column;
+        padding: 25px;
+
+        .title {
+            display: inline-block;
+            text-align: center;
+            margin-top: 10px;
+          }
+
+      }
+
+
+
 

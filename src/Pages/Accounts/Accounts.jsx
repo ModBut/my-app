@@ -8,6 +8,7 @@ import Edit from './Edit';
 import Delete from './Delete';
 import PageGate from '../Auth/PageGate';
 import BlockAccount from './BlockAccount';
+import { StatisticProvider } from '../../Contexts/Statistic';
 
 
 export default function Accounts() {
@@ -33,10 +34,10 @@ export default function Accounts() {
     }
 
     return (
-
+        <StatisticProvider>
         <AccountsProvider>
             {returnComponent}
         </AccountsProvider>
-  
+        </StatisticProvider>
     )
 }

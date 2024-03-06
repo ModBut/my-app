@@ -12,22 +12,14 @@ export default function useAccounts() {
     const [createAccount, setCreatAccount] = useState(null);
     const [editAccount, setEditAccount] = useState(null);
     const [deleteAccount, setDeleteAccount] = useState(null);
-    const [filterAccountBalance, setFilterAccountBalance] = useState('all');
     const [blocked, setBlocked] = useState(false);
+    const [filterAccountBalance, setFilterAccountBalance] = useState('all');
+    const [filterBlockedAccount, setFilterBlockedAccount] = useState('all');
 
     const { user, logout } = useContext(Auth);
 
     const { show401Page } = useContext(Router);
 
-
-    const sorts = [
-        {name: 'default', value: 'default'},
-        {name: 'accountBalance_asc', value: 'accountBalance 1-9'},
-        {name: 'accountBalance_desc', value: 'accountBalance 9-1'},
-      ]
-      const [sort, setSort] = useState('default');
-
-  
     useEffect(() => {
         if (null === user) {
             return;
@@ -52,7 +44,7 @@ export default function useAccounts() {
                     }
                 }
             })
-    }, [sort]);
+    }, []);
 
     useEffect(() => {
         if (null !== createAccount) {
@@ -62,7 +54,6 @@ export default function useAccounts() {
                 .then(res => {
                     setCreatAccount(null);
                     setAccounts(a => a.map(account => account.id === res.data.uuid ? {...account, id: res.data.id} : account));
-            
                 })
                 .catch(err => {
                     setCreatAccount(null);
@@ -79,7 +70,6 @@ export default function useAccounts() {
         }
     }, [createAccount]);
 
-
     useEffect(() => {
         if (null !== editAccount) {
             const withTokenUrl = 
@@ -88,7 +78,6 @@ export default function useAccounts() {
             if (editAccount.image === editAccount.old.image) {
                 toServer.image = null;
             }
-            console.log(toServer)
             axios.put(withTokenUrl, toServer)
                 .then(res => {
                     setEditAccount(null);
@@ -137,15 +126,18 @@ export default function useAccounts() {
         }
     }, [deleteAccount]);
 
+
     const filteredAccounts = accounts.filter(account => {
         if (filterAccountBalance === 'all') return true;
         if (filterAccountBalance === 'empty-accounts') return account.accountBalance === 0;
         if (filterAccountBalance === 'accounts-with-funds') return account.accountBalance > 0;
         if (filterAccountBalance === 'accounts-with--funds') return account.accountBalance < 0;
-        
+        if (filterBlockedAccount === 'all') return true;
+        if (filterBlockedAccount === 'blocked') return account.blocked;
+        if (filterBlockedAccount === 'notblocked') return !account.blocked;
         return true;
     });
-
+ 
     return {
         accounts: filteredAccounts, 
         setAccounts,
@@ -159,7 +151,7 @@ export default function useAccounts() {
         setFilterAccountBalance,
         blocked, 
         setBlocked,
-        sorts,
-        setSort, sort,
+        filterBlockedAccount, 
+        setFilterBlockedAccount
     };
 }

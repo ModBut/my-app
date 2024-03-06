@@ -4,7 +4,8 @@ import { Statistic } from "../../Contexts/Statistic";
 
 export default function Layout() {
 
-    const {totalCount, totalBalance, average} = useContext(Statistic);
+    const {totalCount, totalBalance, average, accountsWithoutImage, accountWithZeroBalance, accountsWitNegativeBalance,
+        accountsWithBalance} = useContext(Statistic);
 
     return (
         <>
@@ -20,6 +21,18 @@ export default function Layout() {
                 }
                 {
                     average !== null && (<p>Accounts Balance Average: {average.toFixed(2)} €</p>)
+                }
+                {
+                    accountsWithoutImage !== null && (<p>Accounts without image: {accountsWithoutImage}</p>)
+                }
+                {
+                    accountWithZeroBalance !== null && (<p>Accounts with Zero Funds: {accountWithZeroBalance}</p>)
+                }
+                {
+                    accountsWitNegativeBalance !== null && (<p>Accounts with Negative Balanse: {accountsWitNegativeBalance}</p>)
+                }
+                {
+                    accountsWithBalance !== null && (<p>Accounts with Funds: {accountsWithBalance}</p>)
                 }
             </div>
         </>

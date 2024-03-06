@@ -3,6 +3,7 @@ import TopNav from "../TopNav";
 import { Accounts } from "../../Contexts/Accounts";
 import { Router } from "../../Contexts/Router";
 import useImage from '../../Hooks/useImage'
+import Confirm from "./Confirm";
 
 export default function Edit() {
 
@@ -10,6 +11,7 @@ export default function Edit() {
     const [transactionAmount, setTransactionAmount] = useState(0);
     const [error, setError] = useState('');  
     const [deleteImage, setDeleteImage] = useState(false);
+    const [openConfirm, setOpenConfirm] = useState(false);
     const {accounts, setAccounts, setEditAccount, blocked, setBlocked} = useContext(Accounts);
     const {params} = useContext(Router);
 
@@ -61,12 +63,47 @@ export default function Edit() {
           </div>
       );     
 
-      const addFunds = () => {
+    //   const addFunds = () => {
+    //     const amount = parseFloat(transactionAmount);
+    //     const updatedAccount = { ...account, accountBalance: account.accountBalance + amount };
+    //     setAccount(updatedAccount);
+    //     setTransactionAmount(0);
+    // };
+
+    // const addFunds = () => {
+    //     const amount = parseFloat(transactionAmount);
+    //     const updatedAccount = { ...account, accountBalance: account.accountBalance + amount };
+        
+    //     if (amount >= 1000) {
+    //         const confirmation = window.confirm("Ar tikrai norite pridėti sumą didesnę nei 1000 eurų?");
+    //         if (!confirmation) {
+    //             return; // Jei naudotojas paspaudžia "Atšaukti", nutraukti pridėjimą
+    //         }
+    //     }
+    //     setAccount(updatedAccount);
+    //     setTransactionAmount(0);
+    // }
+
+        const addFunds = () => {
+        const amount = parseFloat(transactionAmount);
+        const updatedAccount = { ...account, accountBalance: account.accountBalance + amount };
+        
+        if (amount >= 1000) {
+            setOpenConfirm(true);
+            return;
+        }
+        setAccount(updatedAccount);
+        setTransactionAmount(0);
+    }
+
+    const handleConfirm = () => {
+        setOpenConfirm(false); 
         const amount = parseFloat(transactionAmount);
         const updatedAccount = { ...account, accountBalance: account.accountBalance + amount };
         setAccount(updatedAccount);
         setTransactionAmount(0);
-    };
+    }
+
 
     const withdrawFunds = () => {
         const amount = parseFloat(transactionAmount);
@@ -81,11 +118,11 @@ export default function Edit() {
     };
 
     const blockAccount = () => {
-        setBlocked(!blocked); 
+        setBlocked(true); 
     };
 
     const unblockAccount = () => {
-        setBlocked(blocked);
+        setBlocked(false);
     }
 
       const save = () => {
@@ -168,6 +205,7 @@ export default function Edit() {
                         <button type="button" onClick={() => window.location.href = '#accounts'}>Cancle Edit</button>
                         
                 </div>
+                {openConfirm && <Confirm setOpenConfirm={setOpenConfirm} transactionAmount={transactionAmount} handleConfirm={handleConfirm}/>}
             </div>
             </>
     )
